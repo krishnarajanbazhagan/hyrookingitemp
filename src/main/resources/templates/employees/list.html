@@ -1,0 +1,22 @@
+<!-- src/main/resources/templates/employees/list.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Employee List</title>
+</head>
+<body>
+<h1>Employees</h1>
+<div>
+    <a th:href="@{/employees/add}">Add New Employee</a>
+    <ul>
+        <li th:each="employee : ${employees}">
+            <span th:text="${employee.employeename}">Employee Name</span>
+            |
+            <a th:href="@{/employees/edit/{id}(id=${employee.employeeid})}">Edit</a>
+            |
+            <a th:href="@{/employees/delete/{id}(id=${employee.employeeid})}">Delete</a>
+        </li>
+    </ul>
+</div>
+</body>
+</html>
