@@ -38,7 +38,7 @@ public class EmployeeController {
     public String showEditForm(@PathVariable int id, Model model) {
         Employee employee = employeeService.findById(id);
         model.addAttribute("employee", employee);
-        return "employees/edit";
+        return "edit";
     }
 
     @PostMapping("/update/{id}")
