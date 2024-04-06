@@ -35,18 +35,34 @@ public class EmployeeController {
     }
 
     @GetMapping("/edit/{id}")
-    public String showEditForm(@PathVariable int id, Model model) {
-        Employee employee = employeeService.findById(id);
-        model.addAttribute("employee", employee);
-        return "employees/edit";
+    public String showEditForm(@PathVariable int id, Model model, RedirectAttributes redirectAttrs) {
+        try {
+            Employee employee = employeeService.findById(id);
+            model.addAttribute("employee", employee);
+            return "employees/edit";
+        } catch (EmployeeNotFoundException e) { // Assuming EmployeeNotFoundException is a custom exception
+            redirectAttrs.addFlashAttribute("errorMessage", "Employee with ID " + id + " not found.");
+            return "redirect:/employees";
+        } catch (Exception e) {
+            redirectAttrs.addFlashAttribute("errorMessage", "An error occurred while trying to edit the employee.");
+            return "redirect:/employees";
+        }
     }
-
-    @PostMapping("/update/{id}")
-    public String updateEmployee(@PathVariable int id, @ModelAttribute Employee employee, RedirectAttributes redirectAttrs) {
-        employeeService.updateEmployee(employee); // Your service should handle finding by ID and updating
-        redirectAttrs.addFlashAttribute("message", "Employee updated successfully!");
+    
+    @PostMapping("/update/{employeeid}")
+    public String updateEmployee(@PathVariable int employeeid, @ModelAttribute Employee employee, RedirectAttributes redirectAttrs) {
+        try {
+            employee.setEmployeeid(employeeid); // Adjusted to use the correct field name
+            employeeService.updateEmployee(employee); // Now this matches the method signature
+            redirectAttrs.addFlashAttribute("successMessage", "Employee updated successfully!");
+        } catch (Exception e) { // Catching a general exception for simplicity; adjust as needed
+            redirectAttrs.addFlashAttribute("errorMessage", "An error occurred while trying to update the employee.");
+        }
         return "redirect:/employees";
     }
+    
+    
+
 
     @GetMapping("/delete/{id}")
     public String deleteEmployee(@PathVariable int id, RedirectAttributes redirectAttrs) {

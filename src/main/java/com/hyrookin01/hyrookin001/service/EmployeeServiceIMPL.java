@@ -1,10 +1,10 @@
 package com.hyrookin01.hyrookin001.service;
 
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.hyrookin01.hyrookin001.entity.Employee;
 import com.hyrookin01.hyrookin001.repo.EmployeeRepo;
+import java.util.*;
 
 @Service
 public class EmployeeServiceIMPL implements EmployeeService {
@@ -31,5 +31,15 @@ public class EmployeeServiceIMPL implements EmployeeService {
     @Override
     public void deleteEmployee(int id) {
         employeeRepo.deleteById(id);
+    }
+
+    @Override
+    public Employee findById(int id) {
+        Optional<Employee> employee = employeeRepo.findById(id);
+        if (employee.isPresent()) {
+            return employee.get();
+        } else {
+            throw new RuntimeException("Employee not found for id: " + id); // Consider using a custom exception
+        }
     }
 }
