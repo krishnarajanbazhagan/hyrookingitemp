@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping("/employees") // Changed for simplicity
+@RequestMapping("/employees")
 public class EmployeeController {
 
     @Autowired
@@ -40,7 +40,7 @@ public class EmployeeController {
             Employee employee = employeeService.findById(id);
             model.addAttribute("employee", employee);
             return "employees/edit";
-        } catch (EmployeeNotFoundException e) { // Assuming EmployeeNotFoundException is a custom exception
+        } catch (EmployeeNotFoundException e) {
             redirectAttrs.addFlashAttribute("errorMessage", "Employee with ID " + id + " not found.");
             return "redirect:/employees";
         } catch (Exception e) {
@@ -60,9 +60,6 @@ public class EmployeeController {
         }
         return "redirect:/employees";
     }
-    
-    
-
 
     @GetMapping("/delete/{id}")
     public String deleteEmployee(@PathVariable int id, RedirectAttributes redirectAttrs) {
