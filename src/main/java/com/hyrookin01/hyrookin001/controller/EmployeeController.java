@@ -52,10 +52,10 @@ public class EmployeeController {
     @PostMapping("/update/{employeeid}")
     public String updateEmployee(@PathVariable int employeeid, @ModelAttribute Employee employee, RedirectAttributes redirectAttrs) {
         try {
-            employee.setEmployeeid(employeeid); // Adjusted to use the correct field name
-            employeeService.updateEmployee(employee); // Now this matches the method signature
+            employee.setEmployeeid(employeeid); 
+            employeeService.updateEmployee(employee); 
             redirectAttrs.addFlashAttribute("successMessage", "Employee updated successfully!");
-        } catch (Exception e) { // Catching a general exception for simplicity; adjust as needed
+        } catch (Exception e) { 
             redirectAttrs.addFlashAttribute("errorMessage", "An error occurred while trying to update the employee.");
         }
         return "redirect:/employees";
