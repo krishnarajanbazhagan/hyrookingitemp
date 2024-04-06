@@ -24,7 +24,7 @@ public class EmployeeServiceIMPL implements EmployeeService {
 
     @Override
     public Employee updateEmployee(Employee employee) {
-        // Assuming employee contains the ID of an existing entity, save acts as update
+        
         return employeeRepo.save(employee);
     }
 
@@ -39,7 +39,7 @@ public class EmployeeServiceIMPL implements EmployeeService {
         if (employee.isPresent()) {
             return employee.get();
         } else {
-            throw new RuntimeException("Employee not found for id: " + id); // Consider using a custom exception
+            throw new RuntimeException("Employee not found for id: " + id); 
         }
     }
 }
